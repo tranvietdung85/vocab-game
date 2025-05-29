@@ -165,10 +165,8 @@ function switchMode(mode) {
     document.getElementById('btnQuiz').classList.remove('active');
     document.getElementById('card-mode').style.display = "block";
     document.getElementById('quiz-container').style.display = "none";
+    isRandom = true; // Sửa tại đây để bật ngẫu nhiên mặc định
     loadCard(currentIndex);
-// Bật mặc định chế độ ngẫu nhiên
-    document.getElementById('randomCheckbox').checked = true;
-    toggleRandomOrder(true);
     updateProgress();
   } else {
     document.getElementById('btnQuiz').classList.add('active');
