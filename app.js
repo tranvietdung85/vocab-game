@@ -10,24 +10,18 @@ let lang = 'vi';
 let unlockedLevels = JSON.parse(localStorage.getItem("unlockedLevels") || '["A1"]');
 let quizList = [], quizCurrent = 0, quizScore = 0;
 
-// --- Load file xlsx ---
-document.getElementById('xlsxFile').addEventListener('change', handleFile, false);
-function handleFile(e) {
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, { type: 'array' });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(sheet);
-    wordList = json;
-    populateTopics(json);
+// Load dữ liệu từ file data.json
+fetch('data.json')
+  .then(response => response.json())
+  .then(data => {
+    wordList = data;
+    populateTopics(wordList);
     filterByCriteria();
     loadProgress();
     loadCard(currentIndex);
     updateProgress();
-  };
-  reader.readAsArrayBuffer(e.target.files[0]);
-}
+  });
+
 
 // --- Flashcard + Random + Chủ đề + Type + Level ---
 function populateTopics(data) {
