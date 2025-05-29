@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Học Từ Vựng - Flashcard + Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="language-switch">
+    <button onclick="switchLanguage('vi')">VI</button>
+    <button onclick="switchLanguage('en')">EN</button>
+  </div>
+
+  <div class="mode-switch">
+  <button id="btnFlashcard" class="active" onclick="switchMode('flashcard')">Flashcard</button>
+  <button id="btnQuiz" onclick="switchMode('quiz')">Quiz</button>
+  <select id="quizCount" style="margin-left: 10px;">
+    <option value="5">5 câu</option>
+    <option value="10">10 câu</option>
+    <option value="20">20 câu</option>
+  </select>
+    <div style="margin-top: 10px;">
+      <button onclick="startWrongQuiz()">📚 Ôn lại từ sai</button>
+      <button onclick="clearWrongWords()">🗑 Xóa từ sai</button>
+    </div>
+
+</div>
+
+  <div class="container">
+    <h1 data-lang="title">Học Từ Vựng</h1>
+
+    <input type="file" id="xlsxFile" accept=".xlsx" />
+    <label><input type="checkbox" id="randomToggle" onchange="toggleRandom()"/> <span data-lang="random">Hiển thị từ ngẫu nhiên</span></label>
+    <select id="topicSelect" onchange="filterByCriteria()">
+      <option value="">-- Chọn chủ đề --</option>
+    </select>
+    <select id="levelSelect" onchange="filterByCriteria()">
+      <option value="">-- Chọn cấp độ --</option>
+      <option value="A1">A1</option>
+      <option value="A2">A2</option>
+      <option value="B1">B1</option>
+      <option value="B2">B2</option>
+      <option value="C1">C1</option>
+      <option value="C2">C2</option>
+    </select>
+    <select id="typeSelect" onchange="filterByCriteria()">
+      <option value="">-- Chọn loại từ --</option>
+      <option value="noun">noun</option>
+      <option value="verb">verb</option>
+      <option value="adj">adj</option>
+      <option value="adv">adv</option>
+      <option value="phrasal verb">phrasal verb</option>
+    </select>
+
+    <div id="progress"></div>
+
+    <!-- FLASHCARD -->
+    <div class="card-container" id="card-mode">
+      <div class="card" onclick="flipCard()">
+        <div class="card-inner" id="flashcard">
+          <div class="card-face front">
+            <img id="card-image" src="" alt="Image" />
+            <div id="card-word"></div>
+            <div id="card-ipa"></div>
+          </div>
+          <div class="card-face back" id="card-back"></div>
+        </div>
+      </div>
+
+      <button onclick="nextCard()" data-lang="next">Từ tiếp theo</button>
+      <button onclick="markAsKnown()" data-lang="known">Đã biết</button>
+      <button onclick="resetProgress()" data-lang="reset">Reset tiến độ</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quiz-container" style="display:none"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
