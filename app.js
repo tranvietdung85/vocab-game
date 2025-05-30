@@ -5,7 +5,7 @@ let wordList = [];
 let filteredList = [];
 let currentIndex = 0;
 let knownWords = new Set();
-let isRandom = false;
+let isRandom = true;
 let lang = 'vi';
 let unlockedLevels = JSON.parse(localStorage.getItem("unlockedLevels") || '["A1"]');
 let quizList = [], quizCurrent = 0, quizScore = 0;
@@ -44,12 +44,12 @@ function filterByCriteria() {
     (!level || w.Level === level) &&
     (!type || w.Type === type)
   );
-  currentIndex = 0;
+  // Nếu đang bật random và có dữ liệu, chọn ngẫu nhiên; không thì chọn từ đầu
+  currentIndex = (isRandom && filteredList.length)
+    ? Math.floor(Math.random() * filteredList.length)
+    : 0;
   loadCard(currentIndex);
   updateProgress();
-}
-function toggleRandom() {
-  isRandom = document.getElementById('randomToggle').checked;
 }
 
 // --- Load & lật flashcard ---
