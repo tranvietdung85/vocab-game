@@ -20,11 +20,15 @@
     <option value="10">10 câu</option>
     <option value="20">20 câu</option>
   </select>
-    <div style="margin-top: 10px;">
-      <button onclick="startWrongQuiz()">📚 Ôn lại từ sai</button>
-      <button onclick="clearWrongWords()">🗑 Xóa từ sai</button>
-    </div>
-
+  <div style="margin-top: 10px;">
+    <button onclick="startWrongQuiz()">📚 Ôn lại từ sai</button>
+    <button onclick="clearWrongWords()">🗑 Xóa từ sai</button>
+  </div>
+  <!-- Nút tắt tiếng -->
+  <label style="margin-left:16px;font-size:15px;">
+    <input type="checkbox" id="muteToggle" onchange="toggleMute()" />
+    🔇 Tắt tiếng
+  </label>
 </div>
 
   <div class="container">

@@ -7,6 +7,7 @@ let currentIndex = 0;
 let knownWords = new Set();
 let isRandom = true;
 let lang = 'vi';
+let isMuted = false;
 let unlockedLevels = JSON.parse(localStorage.getItem("unlockedLevels") || '["A1"]');
 let quizList = [], quizCurrent = 0, quizScore = 0;
 
@@ -151,7 +152,7 @@ function resetProgress() {
   updateProgress();
 }
 function speak(text) {
-  if (!text) return;
+  if (!text || isMuted) return; // Nếu đang tắt tiếng thì không phát âm
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = 'en-US';
   speechSynthesis.cancel();
@@ -303,6 +304,11 @@ function switchLanguage(l) {
     }
   });
 }
+
+function toggleMute() {
+  isMuted = document.getElementById('muteToggle').checked;
+}
+
 window.onload = () => {
   loadProgress();
   switchLanguage('vi');
