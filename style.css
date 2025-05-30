@@ -217,3 +217,7 @@ button:active {
   }
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
