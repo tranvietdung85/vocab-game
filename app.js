@@ -151,12 +151,21 @@ function resetProgress() {
   saveProgress();
   updateProgress();
 }
-function speak(text) {
-  if (!text || isMuted) return; // Nếu đang tắt tiếng thì không phát âm
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'en-US';
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utter);
+function speak(word) {
+  if (!word || isMuted) return;
+  // Lấy object hiện tại
+  const wordObj = filteredList[currentIndex];
+  if (wordObj && wordObj.Audio) {
+    // Phát file mp3 từ thư mục audio
+    const audio = new Audio(`/audio/${wordObj.Audio}`);
+    audio.play();
+  } else {
+    // fallback sang speechSynthesis nếu không có file mp3
+    const utter = new SpeechSynthesisUtterance(word);
+    utter.lang = 'en-US';
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+  }
 }
 
 // --- Quiz logic + từ sai ---
