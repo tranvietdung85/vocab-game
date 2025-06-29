@@ -157,7 +157,7 @@ function speak(word) {
   const wordObj = filteredList[currentIndex];
   if (wordObj && wordObj.Audio) {
     // Phát file mp3 từ thư mục audio
-    const audio = new Audio(`/audio/${wordObj.Audio}`);
+    const audio = new Audio(`/audio-A1/${wordObj.Audio}`);
     audio.play();
   } else {
     // fallback sang speechSynthesis nếu không có file mp3
