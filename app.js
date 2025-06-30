@@ -23,7 +23,6 @@ fetch('data.json')
     updateProgress();
   });
 
-
 // --- Flashcard + Random + Chủ đề + Type + Level ---
 function populateTopics(data) {
   const topicSelect = document.getElementById('topicSelect');
@@ -45,7 +44,6 @@ function filterByCriteria() {
     (!level || w.Level === level) &&
     (!type || w.Type === type)
   );
-  // Nếu đang bật random và có dữ liệu, chọn ngẫu nhiên; không thì chọn từ đầu
   currentIndex = (isRandom && filteredList.length)
     ? Math.floor(Math.random() * filteredList.length)
     : 0;
@@ -153,19 +151,32 @@ function resetProgress() {
 }
 function speak(word) {
   if (!word || isMuted) return;
-  // Lấy object hiện tại
   const wordObj = filteredList[currentIndex];
   if (wordObj && wordObj.Audio) {
-    // Phát file mp3 từ thư mục audio
     const audio = new Audio(`/audio-A1/${wordObj.Audio}`);
     audio.play();
   } else {
-    // fallback sang speechSynthesis nếu không có file mp3
     const utter = new SpeechSynthesisUtterance(word);
     utter.lang = 'en-US';
     speechSynthesis.cancel();
     speechSynthesis.speak(utter);
   }
+}
+
+// --- Distractor thông minh ---
+function getSmartDistractors(correctObj, allWords) {
+  const targetType = correctObj.Type?.toLowerCase() || '';
+  const keywords = correctObj.Vietnamese.split(/\s|,|\./).map(k => k.trim()).filter(Boolean);
+  const candidates = allWords.filter(w =>
+    w.English !== correctObj.English &&
+    w.Type?.toLowerCase() === targetType
+  );
+  const prioritized = candidates.filter(w =>
+    keywords.some(kw => w.Vietnamese.includes(kw))
+  );
+  const finalChoices = [...prioritized, ...candidates]
+    .filter((v, i, arr) => arr.findIndex(w => w.English === v.English) === i);
+  return shuffle(finalChoices.map(w => w.Vietnamese)).slice(0, 3);
 }
 
 // --- Quiz logic + từ sai ---
@@ -175,7 +186,7 @@ function switchMode(mode) {
     document.getElementById('btnQuiz').classList.remove('active');
     document.getElementById('card-mode').style.display = "block";
     document.getElementById('quiz-container').style.display = "none";
-    isRandom = true; // Sửa tại đây để bật ngẫu nhiên mặc định
+    isRandom = true;
     loadCard(currentIndex);
     updateProgress();
   } else {
@@ -196,10 +207,6 @@ function startQuiz() {
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
-function getRandomWrongAnswers(correct, count) {
-  const pool = filteredList.filter(item => item.Vietnamese !== correct).map(item => item.Vietnamese);
-  return shuffle(pool).slice(0, count);
-}
 function renderQuiz() {
   if (!quizList.length) {
     document.getElementById('quiz-container').innerHTML = "<h3>Không có từ nào để luyện Quiz!</h3>";
@@ -215,7 +222,7 @@ function renderQuiz() {
   }
   const q = quizList[quizCurrent];
   const correct = q.Vietnamese;
-  const answers = shuffle([correct, ...getRandomWrongAnswers(correct, 3)]);
+  const answers = shuffle([correct, ...getSmartDistractors(q, wordList)]);
   let optionsHTML = "";
   answers.forEach(ans => {
     optionsHTML += `<button class="quiz-option" onclick="checkQuizAnswer('${ans.replace(/'/g,"\'")}', '${correct.replace(/'/g,"\'")}')">${ans}</button>`;
