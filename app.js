@@ -201,20 +201,6 @@ function getRandomWrongAnswers(correct, count) {
   return shuffle(pool).slice(0, count);
 }
 
-function speakFromObj(wordObj) {
-  if (!wordObj || isMuted) return;
-
-  if (wordObj.Audio) {
-    const audio = new Audio(`/audio-A1/${wordObj.Audio}`);
-    audio.play();
-  } else {
-    const utter = new SpeechSynthesisUtterance(wordObj.English || '');
-    utter.lang = 'en-US';
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utter);
-  }
-}
-
 function renderQuiz() {
   if (!quizList.length) {
     document.getElementById('quiz-container').innerHTML = "<h3>Không có từ nào để luyện Quiz!</h3>";
@@ -239,7 +225,7 @@ function renderQuiz() {
     <div class="quiz-question">
       Từ: <strong>${q.English}</strong>
       <span class="ipa">${q.IPA || ''}</span>
-      <button onclick="speakFromObj(quizData[currentQuizIndex])">🔊</button>
+      <button onclick='speakFromObj(quizList[${quizCurrent}])'>🔊</button>
     </div>
     <div class="quiz-options">${optionsHTML}</div>
     <div class="score">Điểm: ${quizScore} / ${quizList.length}</div>
@@ -272,6 +258,22 @@ function checkQuizAnswer(selected, correct) {
     renderQuiz();
   }, 2500);
 }
+
+
+function speakFromObj(wordObj) {
+  if (!wordObj || isMuted) return;
+
+  if (wordObj.Audio) {
+    const audio = new Audio(`/audio-A1/${wordObj.Audio}`);
+    audio.play();
+  } else {
+    const utter = new SpeechSynthesisUtterance(wordObj.English || '');
+    utter.lang = 'en-US';
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+  }
+}
+
 function showFeedback(text, color) {
   let fb = document.createElement("div");
   fb.id = "feedback";
