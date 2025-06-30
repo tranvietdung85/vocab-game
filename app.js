@@ -222,8 +222,9 @@ function renderQuiz() {
   });
   document.getElementById('quiz-container').innerHTML = `
     <div class="quiz-question">
-    Từ: <strong>${q.English}</strong>
-    <span class="ipa">${q.IPA || ''}</span>
+      Từ: <strong>${q.English}</strong>
+      <span class="ipa">${q.IPA || ''}</span>
+      <button class="speak-btn" onclick="playAudio('${q.Audio}')">🔊</button>
     </div>
     <div class="quiz-options">${optionsHTML}</div>
     <div class="score">Điểm: ${quizScore} / ${quizList.length}</div>
