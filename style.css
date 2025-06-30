@@ -1,61 +1,220 @@
-
-/* Giao diện toàn màn hình, không cuộn */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
   font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  overflow: hidden;
 }
 
 #app-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100vh;
   box-sizing: border-box;
-  padding: 8px;
-}
-
-#control-panel, #bottom-controls {
-  flex-shrink: 0;
-}
-
-#card-mode, #quiz-container {
-  flex-grow: 1;
   overflow: hidden;
+}
+
+.language-switch,
+.mode-switch {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.language-switch button,
+.mode-switch button {
+  margin: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #007bff;
+  background: #fff;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.mode-switch button.active {
+  background: #007bff;
+  color: #fff;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #fff;
+  margin: 0 auto;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.13);
+  max-width: 600px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.card-container {
+  flex-grow: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;
+  height: 200px;
+  perspective: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 16px;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  box-sizing: border-box;
 }
 
-.card {
-  max-height: 50vh;
-  max-width: 100%;
-  margin: auto;
+.front {
+  background: #e3f0ff;
 }
 
-.quiz-option {
-  width: 100%;
-  max-width: 300px;
-  margin: 6px auto;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
+.back {
+  background: #fffbe3;
+  transform: rotateY(180deg);
+}
+
+.card img {
+  max-width: 100px;
+  margin-bottom: 10px;
   border-radius: 8px;
-  background-color: #f8f8f8;
+}
+
+#card-word {
+  font-weight: bold;
+  font-size: 36px;
+  margin-bottom: 4px;
+}
+
+#card-ipa {
+  font-size: 18px;
+  font-style: italic;
+  color: #333;
+}
+
+#card-back {
+  font-size: 32px;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+  line-height: 1.3;
+}
+
+button {
+  margin: 6px 4px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1.5px solid #007bff;
+  background: #fff;
+  color: #007bff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:active {
+  opacity: 0.85;
+}
+
+#quiz-container {
+  flex-grow: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
 }
 
 .quiz-question {
   font-size: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+.quiz-options button {
+  width: 100%;
+  max-width: 300px;
+  margin: 4px 0;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.quiz-option.correct {
+  background-color: #d4edda !important;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.quiz-option.wrong {
+  background-color: #f8d7da !important;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+#quiz-container .score {
+  font-size: 16px;
+  color: #222;
 }
 
 .ipa {
   font-style: italic;
   color: #555;
-  margin-left: 8px;
+  margin-left: 6px;
   font-size: 0.9em;
+}
+
+@media (max-width: 600px) {
+  #card-word {
+    font-size: 26px;
+  }
+
+  #card-ipa {
+    font-size: 14px;
+  }
+
+  #card-back {
+    font-size: 22px;
+  }
 }
