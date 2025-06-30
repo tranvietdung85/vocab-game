@@ -241,8 +241,10 @@ function checkQuizAnswer(selected, correct) {
 
   if (selected === correct) {
     quizScore++;
+    playEffect("correct"); // 🔊 thêm dòng này
     showFeedback("🎉 Chính xác!", "green");
   } else {
+    playEffect("wrong");   // 🔊 thêm dòng này
     showFeedback("❌ Sai rồi!", "red");
     const q = quizList[quizCurrent];
     let wrongList = JSON.parse(localStorage.getItem("wrongWords") || "[]");
@@ -334,6 +336,14 @@ function switchLanguage(l) {
     }
   });
 }
+
+function playEffect(type) {
+  const audio = new Audio(
+    type === 'correct' ? 'sound-effects/correct.mp3' : 'sound-effects/wrong.mp3'
+  );
+  audio.play().catch(e => console.error("Lỗi phát hiệu ứng:", e));
+}
+
 
 function toggleMute() {
   isMuted = document.getElementById('muteToggle').checked;
