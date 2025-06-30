@@ -174,8 +174,8 @@ function getSmartDistractors(correctObj, allWords) {
   const prioritized = candidates.filter(w =>
     keywords.some(kw => w.Vietnamese.includes(kw))
   );
-  const finalChoices = [...prioritized, ...candidates]
-    .filter((v, i, arr) => arr.findIndex(w => w.English === v.English) === i);
+  const combined = [...sameTopic, ...semantic, ...sameType]
+  .filter((v, i, arr) => arr.findIndex(w => w.English === v.English) === i);
   return shuffle(finalChoices.map(w => w.Vietnamese)).slice(0, 3);
 }
 
