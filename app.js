@@ -200,6 +200,21 @@ function getRandomWrongAnswers(correct, count) {
   const pool = filteredList.filter(item => item.Vietnamese !== correct).map(item => item.Vietnamese);
   return shuffle(pool).slice(0, count);
 }
+
+function speakFromObj(wordObj) {
+  if (!wordObj || isMuted) return;
+
+  if (wordObj.Audio) {
+    const audio = new Audio(`/audio-A1/${wordObj.Audio}`);
+    audio.play();
+  } else {
+    const utter = new SpeechSynthesisUtterance(wordObj.English || '');
+    utter.lang = 'en-US';
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+  }
+}
+
 function renderQuiz() {
   if (!quizList.length) {
     document.getElementById('quiz-container').innerHTML = "<h3>Không có từ nào để luyện Quiz!</h3>";
@@ -224,7 +239,7 @@ function renderQuiz() {
     <div class="quiz-question">
       Từ: <strong>${q.English}</strong>
       <span class="ipa">${q.IPA || ''}</span>
-      <button class="speak-btn" onclick="playAudio('${q.Audio}')">🔊</button>
+      <button onclick="speakFromObj(quizData[currentQuizIndex])">🔊</button>
     </div>
     <div class="quiz-options">${optionsHTML}</div>
     <div class="score">Điểm: ${quizScore} / ${quizList.length}</div>
