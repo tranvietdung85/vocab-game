@@ -65,7 +65,7 @@ function loadCard(idx) {
   document.getElementById('card-ipa').textContent = word.IPA || '';
   document.getElementById('card-back').textContent = word.Vietnamese || word.Meaning || '';
   const img = document.getElementById('card-image');
-  img.src = word.Image || '';
+  img.src = word.Image || `/image-A1/${word.English}.jpg`;
   img.style.display = word.Image ? 'block' : 'none';
   document.querySelector('.card').classList.remove('flipped');
   speak(word.English);
