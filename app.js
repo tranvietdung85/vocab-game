@@ -223,7 +223,7 @@ function renderQuiz() {
   document.getElementById('quiz-container').innerHTML = `
     <div class="quiz-question">
     Từ: <strong>${q.English}</strong>
-    <span class="ipa">/${q.IPA || ''}/</span>
+    <span class="ipa">/${q.IPA ''}/</span>
     </div>
     <div class="quiz-options">${optionsHTML}</div>
     <div class="score">Điểm: ${quizScore} / ${quizList.length}</div>
