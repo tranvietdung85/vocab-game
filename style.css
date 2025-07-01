@@ -236,4 +236,45 @@ button:active {
 html, body {
   overflow-x: hidden;
 }
+/* cài đặt quảng cáo */
+.ad-banner {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ad-banner img {
+  width: 100px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+.left-banner {
+  left: 8px;
+}
+.right-banner {
+  right: 8px;
+}
 
+/* Mobile: gộp 2 cột thành 1 hàng dưới cùng */
+@media (max-width: 768px) {
+  .left-banner, .right-banner {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  .ad-banner img {
+    width: 70px;
+    margin: 4px;
+  }
+  body::after {
+    content: '';
+    display: block;
+    height: 100px; /* chừa khoảng trống nếu cần */
+  }
+}
