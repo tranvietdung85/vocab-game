@@ -182,6 +182,36 @@ button:active {
   font-size: 0.9em;
 }
 
+/* Banner trái và phải */
+.ad-container {
+  position: fixed;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+.ad-left {
+  left: 20px;
+}
+
+.ad-right {
+  right: 20px;
+}
+
+.ad-container img {
+  width: 90px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.ad-container img:hover {
+  transform: scale(1.05);
+}
 
 /* Responsive for Mobile */
 @media (max-width: 600px) {
@@ -248,8 +278,8 @@ html, body {
   z-index: 10;
 }
 .side-banner img {
-  width: 90px;
-  height: 90px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 0 6px rgba(0,0,0,0.2);
@@ -278,6 +308,23 @@ html, body {
   .side-banner img {
     width: 30px;
     height: 30px;
+  }
+  .ad-container {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .ad-left, .ad-right {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ad-container img {
+    width: 70px;
+    margin: 5px;
   }
 }
 .side-banner img:hover {
