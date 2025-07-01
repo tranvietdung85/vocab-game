@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Phiên bản đầy đủ: Flashcard + Quiz + Mở khóa cấp độ + Ghi nhớ từ sai
 
 // --- Khởi tạo biến ---
@@ -355,7 +354,7 @@ window.onload = () => {
   switchLanguage('vi');
   renderLevelOptions();
 };
-=======
+
 // Phiên bản đầy đủ: Flashcard + Quiz + Mở khóa cấp độ + Ghi nhớ từ sai
 
 // --- Khởi tạo biến ---
@@ -712,4 +711,4 @@ window.onload = () => {
   switchLanguage('vi');
   renderLevelOptions();
 };
->>>>>>> 1a03542 (✨ Thêm quảng cáo banner 2 bên và responsive trên điện thoại)
+
