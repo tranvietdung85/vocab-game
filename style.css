@@ -265,38 +265,32 @@ html, body {
 
 /* Responsive trên điện thoại: gom thành 1 hàng ở đáy */
 @media (max-width: 768px) {
-  .side-banner {
-    position: static;
+ .side-banner {
+    position: fixed;               /* Cố định ở đáy */
     bottom: 0;
-    transform: none;
-    width: 50%;
-    display: grid;
-    justify-content: left;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;                 /* 🔄 Dùng flex thay vì grid */
+    flex-direction: row;           /* 🧱 Xếp theo hàng ngang */
+    justify-content: center;       /* Căn giữa ảnh */
     align-items: center;
-    margin: 5px auto;
-    gap: 2px;
-    padding: 2px;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.95); /* Nền mờ dễ nhìn */
+    z-index: 9999;
+    flex-wrap: wrap;               /* Nếu màn hình hẹp quá, cho ảnh xuống hàng */
   }
+
   .side-banner img {
     width: 50px;
     height: 50px;
-  }
-  .ad-container {
-    position: static;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 10px;
+    object-fit: cover;
   }
 
-  .ad-left, .ad-right {
-    display: flex;
-    justify-content: center;
-  }
-
-  .ad-container img {
-    width: 70px;
-    margin: 5px;
+  .left-banner,
+  .right-banner {
+    all: unset;                    /* Xóa các thuộc tính cũ như fixed, left/right */
   }
 }
 .side-banner img:hover {
