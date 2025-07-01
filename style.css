@@ -238,6 +238,7 @@ html, body {
 .side-banner {
   position: fixed;
   top: 50%;
+  transform: translateY(-50%);
   width: 500px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -265,14 +266,19 @@ html, body {
 /* Responsive trên điện thoại: gom thành 1 hàng ở đáy */
 @media (max-width: 768px) {
   .side-banner {
-    position: fixed;
-    bottom: 0;
+  position: fixed;              /* 👈 cố định ở vị trí */
+    bottom: 0;                    /* 👈 nằm ở đáy màn hình */
+    left: 0;
+    right: 0;
     transform: none;
-    width: 50%;
-    display: flex;
+    width: 100%;
+    display: flex;                /* 👈 xếp ảnh thành 1 hàng ngang */
     justify-content: center;
     align-items: center;
-    margin: 10px auto;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.95); /* nền mờ để dễ nhìn */
+    padding: 8px;
+    z-index: 1000;
   }
   .side-banner img {
     width: 50px;
