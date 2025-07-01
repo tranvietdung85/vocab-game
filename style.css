@@ -248,8 +248,8 @@ html, body {
   z-index: 10;
 }
 .side-banner img {
-  width: 55px;
-  height: 55px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 0 6px rgba(0,0,0,0.2);
@@ -276,7 +276,11 @@ html, body {
     margin: 10px auto;
   }
   .side-banner img {
-    width: 65px;
-    height: 65px;
+    width: 30px;
+    height: 30px;
   }
+}
+.side-banner img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
 }
