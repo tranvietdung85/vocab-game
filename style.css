@@ -236,13 +236,13 @@ html, body {
 }
 /* cài đặt banner quảng cáo */
 .side-banner {
-  position: fixed;
+  position: static;
   top: 50%;
   transform: translateY(-40%);
   width: 500px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 1px;
   z-index: 10;
 }
 .side-banner img {
@@ -266,40 +266,34 @@ html, body {
 /* Responsive trên điện thoại: gom thành 1 hàng ở đáy */
 @media (max-width: 768px) {
   .side-banner {
-    position: fixed;
-    bottom: 0;
-    transform: none;
-    width: 50%;
-    display: flex;
+    position: static; /* Không cố định nữa */
+    display: flex; /* Dàn ảnh theo hàng ngang */
     justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-    gap: 10px;
+    flex-wrap: wrap; /* Xuống dòng nếu tràn */
+    gap: 2px;
     padding: 8px;
+    margin-top: 16px;
+    width: 100%; /* Chiếm toàn bộ chiều ngang */
     z-index: 1000;
   }
+
   .side-banner img {
     width: 50px;
-    height: auto;
+    height: 50px;
+    border-radius: 8px;
+    margin: 4px;
+    object-fit: cover;
   }
+
   .ad-container {
-    position: static;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 10px;
+    display: none; /* Ẩn nếu không dùng nữa */
   }
 
   .ad-left, .ad-right {
-    display: flex;
-    justify-content: center;
-  }
-
-  .ad-container img {
-    width: 70px;
-    margin: 5px;
+    display: none; /* Ẩn nếu chuyển sang .side-banner hết rồi */
   }
 }
+
 .side-banner img:hover {
   transform: scale(1.1);
   box-shadow: 0 0 12px rgba(0,0,0,0.3);
