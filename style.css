@@ -265,34 +265,38 @@ html, body {
 
 /* Responsive trên điện thoại: gom thành 1 hàng ở đáy */
 @media (max-width: 768px) {
- .side-banner {
-    position: fixed;               /* Cố định ở đáy */
+@media (max-width: 768px) {
+  .side-banner {
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
-    display: flex;                 /* 🔄 Dùng flex thay vì grid */
-    flex-direction: row;           /* 🧱 Xếp theo hàng ngang */
-    justify-content: center;       /* Căn giữa ảnh */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    gap: 8px;
     padding: 8px;
-    background: rgba(255, 255, 255, 0.95); /* Nền mờ dễ nhìn */
+    background: rgba(255, 255, 255, 0.95);
     z-index: 9999;
-    flex-wrap: wrap;               /* Nếu màn hình hẹp quá, cho ảnh xuống hàng */
+    gap: 8px;
+    flex-wrap: nowrap;         /* Không cho xuống hàng */  
   }
 
   .side-banner img {
-    width: 50px;
-    height: 50px;
+    width: 10vw;
+    max-width: 60px;
+    min-width: 30px;
+    height: auto;
     object-fit: cover;
+    flex-shrink: 0;            /* Không cho tự co lại vượt min-width */
   }
 
-  .left-banner,
-  .right-banner {
-    all: unset;                    /* Xóa các thuộc tính cũ như fixed, left/right */
+  .left-banner, .right-banner {
+    all: unset;
   }
 }
+
 .side-banner img:hover {
   transform: scale(1.1);
   box-shadow: 0 0 12px rgba(0,0,0,0.3);
