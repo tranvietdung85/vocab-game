@@ -239,7 +239,7 @@ html, body {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  width: 270px;
+  width: 540px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
