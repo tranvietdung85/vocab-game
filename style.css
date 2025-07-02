@@ -268,9 +268,8 @@ button:active {
     flex-wrap: wrap;
     justify-content: center;
   }
-  .mode-buttons button,
-  .quiz-actions button,
-  .quiz-count select,
+   
+  
   .quiz-result-buttons button,
   button,
   select,
@@ -281,7 +280,10 @@ button:active {
     font-size: 17px;
     padding: 10px 0;
   }
-   .mode-buttons button {
+   .mode-buttons button,
+   .quiz-actions button,
+   .quiz-count select,
+   .language-switch button {
     flex: 1 1 auto;
     width: auto;
     min-width: 42%;
