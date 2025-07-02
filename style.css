@@ -265,7 +265,6 @@ html, body {
 
 /* Responsive trên điện thoại: gom thành 1 hàng ở đáy */
 @media (max-width: 768px) {
-@media (max-width: 768px) {
   .side-banner {
     position: fixed;
     bottom: 0;
