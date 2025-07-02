@@ -187,6 +187,7 @@ function switchMode(mode) {
   const quiz = document.getElementById('quiz-container');
   const result = document.getElementById('quiz-result-block');
   const count = document.getElementById('quizCount');
+  const reviewBtns = document.querySelector('.quiz-actions');
 
   document.getElementById('btnFlashcard').classList.toggle('active', mode === 'flashcard');
   document.getElementById('btnQuiz').classList.toggle('active', mode === 'quiz');
@@ -195,6 +196,7 @@ function switchMode(mode) {
   quiz.style.display = mode === 'quiz' ? 'block' : 'none';
   result.style.display = 'none';
   count.style.display = mode === 'quiz' ? 'inline-block' : 'none';
+  reviewBtns.style.display = mode === 'quiz' ? 'flex' : 'none';
 
   const filters = ["topicSelect", "levelSelect", "typeSelect"];
   filters.forEach(id => {
