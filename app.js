@@ -223,6 +223,14 @@ function startQuiz() {
   quizList = shuffle([...filteredList]).slice(0, count);
   quizCurrent = 0;
   quizScore = 0;
+
+  const quizContainer = document.getElementById('quiz-container');
+  const quizResultBlock = document.getElementById('quiz-result-block');
+
+  // Ẩn kết quả quiz nếu đang hiển thị
+  if (quizResultBlock) quizResultBlock.style.display = 'none';
+  if (quizContainer) quizContainer.style.display = 'block';
+
   renderQuiz();
 }
 
