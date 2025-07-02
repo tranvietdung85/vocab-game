@@ -21,7 +21,12 @@ fetch('data.json')
     loadProgress();
     loadCard(currentIndex);
     updateProgress();
+    // Ẩn quizCount, quiz-actions, quiz-result-block ban đầu
+    document.getElementById('quizCount').style.display = 'none';
+    document.querySelector('.quiz-actions').style.display = 'none';
+    document.getElementById('quiz-result-block').style.display = 'none';
   });
+
 
 function populateTopics(data) {
   const topicSelect = document.getElementById('topicSelect');
