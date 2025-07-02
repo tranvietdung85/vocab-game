@@ -11,6 +11,12 @@ body {
 .mode-switch {
   margin-bottom: 16px;
 }
+.mode-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
 .language-switch button,
 .mode-switch button,
@@ -23,6 +29,7 @@ body {
   background: #fff;
   color: #007bff;
   cursor: pointer;
+  flex: 1 0 auto;
 }
 
 .mode-buttons button.active {
