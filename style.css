@@ -214,7 +214,7 @@ button:active {
 .quiz-option.wrong {
   background-color: #f8d7da !important;
   border-color: #dc3545;
-  color: #721c24;
+  color: #fff;
 }
 
 .quiz-result {
