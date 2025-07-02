@@ -266,7 +266,7 @@ function renderQuiz() {
 
   let optionsHTML = "";
   answers.forEach(ans => {
-    optionsHTML += `<button class="quiz-option" onclick="checkQuizAnswer('${ans.replace(/'/g,"\\'")}', '${correct.replace(/'/g,"\\'")}')">${ans}</button>`;
+    optionsHTML += `<button class="quiz-option" onclick="checkQuizAnswer('${ans.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">${ans}</button>`;
   });
 
   quizContainer.innerHTML = `
@@ -281,6 +281,7 @@ function renderQuiz() {
 
   applyPastelToOptions();
 }
+
 
 function applyPastelToOptions() {
   const options = document.querySelectorAll(".quiz-option");
