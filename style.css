@@ -14,7 +14,8 @@ body {
 
 .language-switch button,
 .mode-buttons button,
-.button.active button {
+.button.active button,
+.quiz-actions button {
   margin: 0 8px;
   padding: 8px 24px;
   font-size: 16px;
