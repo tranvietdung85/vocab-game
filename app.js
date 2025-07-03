@@ -384,7 +384,7 @@ function switchLanguage(l) {
       if (key === 'title') el.textContent = "Học Từ Vựng";
       if (key === 'next') el.textContent = "Từ tiếp theo";
       if (key === 'known') el.textContent = "Đã biết";
-      if (key === 'reset') el.textContent = "Reset tiến độ";
+      if (key === 'reset') el.textContent = "Học lại toàn bộ";
       if (key === 'random') el.textContent = "Hiển thị từ ngẫu nhiên";
     } else {
       if (key === 'title') el.textContent = "Vocabulary Practice";
