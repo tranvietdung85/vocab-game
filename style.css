@@ -132,14 +132,13 @@ body {
 
 .card {
   width: 100%;
-  max-width: 100%;
+  max-width: 360px;
   height: 240px;
-  margin: 16px auto;
+  margin: 32px auto;
   perspective: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
 }
 
 .card-inner {
@@ -160,7 +159,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  padding: 16px;
+  padding: 20px;
   border-radius: 14px;
   backface-visibility: hidden;
   box-shadow: 0 2px 12px rgba(0,0,0,0.1);
@@ -169,10 +168,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow-y: auto;
-  overflow-wrap: break-word;
   box-sizing: border-box;
-  word-wrap: break-word;
-  text-align: center;
 }
 
 .front {
@@ -191,10 +187,9 @@ body {
 }
 
 #card-word {
-  font-size: 28px;
   font-weight: bold;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+  font-size: 40px;
+  margin-bottom: 6px;
 }
 
 #card-ipa {
@@ -273,11 +268,16 @@ body {
   }
 
   .card {
-    max-width: 99vw;
+    max-width: 95vw;
     height: auto;
     margin: 10px auto;
+    padding: 0;
   }
 
+  .card-face {
+  padding: 12px;
+  }
+  
   .card img {
     max-width: 80px;
   }
