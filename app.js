@@ -266,8 +266,8 @@ function renderQuiz() {
 
   let optionsHTML = "";
   answers.forEach(ans => {
-    optionsHTML += `<button class="quiz-option" onclick="checkQuizAnswer('${ans.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">${ans}</button>`;
-  });
+  optionsHTML += `<button class="quiz-option quiz-button" onclick="checkQuizAnswer('${ans.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">${ans}</button>`;
+});
 
   quizContainer.innerHTML = `
     <div class="quiz-question">

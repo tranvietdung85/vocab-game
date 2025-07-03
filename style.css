@@ -238,6 +238,16 @@ body {
   right: 10px;
 }
 
+.quiz-button {
+  width: 90%;
+  max-width: 90%;
+  margin: 8px auto;
+  display: block;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+
 @media (max-width: 600px) {
   body {
     padding: 8px;
@@ -253,6 +263,12 @@ body {
     max-width: 95% !important;
     margin: 4px; 
   }
+
+  .quiz-button {
+  width: 90% !important;
+  max-width: 95% !important;
+  }
+
   button,
   select {
     width: auto;
