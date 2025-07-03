@@ -303,6 +303,15 @@ function checkQuizAnswer(selected, correct) {
     quizScore++;
     playEffect("correct");
     showFeedback("🎉 Chính xác!", "green");
+    const q = quizList[quizCurrent];
+    const correctMap = JSON.parse(localStorage.getItem("correctMap") || '{}');
+    correctMap[q.English] = (correctMap[q.English] || 0) + 1;
+
+    // ✅ Nếu trả lời đúng từ này >= 3 lần → đánh dấu là đã biết
+    if (correctMap[q.English] >= 3) {
+    knownWords.add(q.English);
+    saveProgress();
+    updateProgress();
   } else {
     playEffect("wrong");
     showFeedback("❌ Sai rồi!", "red");
@@ -335,6 +344,7 @@ function showFeedback(text, color) {
   fb.style.color = "#fff";
   fb.style.borderRadius = "12px";
   fb.style.zIndex = 9999;
+  fb.style.whiteSpace = "nowrap"; // ✅ ngăn xuống dòng
   document.body.appendChild(fb);
 }
 
