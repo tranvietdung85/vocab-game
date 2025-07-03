@@ -13,7 +13,7 @@ body {
 }
 
 .language-switch button,
-.mode-buttons button
+.mode-buttons button,
 .button.active button {
   margin: 0 8px;
   padding: 8px 24px;
