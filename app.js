@@ -102,7 +102,7 @@ function markAsKnown() {
 function updateProgress() {
   const knownCount = filteredList.filter(w => knownWords.has(w.English)).length;
   const total = filteredList.length;
-  document.getElementById('progress').textContent = `Tiến độ: ${knownCount} / ${total} từ đã biết`;
+  document.getElementById('progress').textContent = `Từ đã biết: ${knownCount} / ${total} từ`;
   updateLevelUnlocking();
 }
 

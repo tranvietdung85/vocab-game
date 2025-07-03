@@ -72,8 +72,8 @@
         </div>
       </div>
       <button onclick="nextCard()" data-lang="next">Từ tiếp theo</button>
-      <button onclick="markAsKnown()" data-lang="known">Đã biết</button>
-      <button onclick="resetProgress()" data-lang="reset">Reset tiến độ</button>
+      <button onclick="markAsKnown()" data-lang="known">Từ đã biết</button>
+      <button onclick="resetProgress()" data-lang="reset">Học lại toàn bộ</button>
     </div>
 
     <!-- QUIZ -->
@@ -83,8 +83,8 @@
     <div id="quiz-result-block" class="quiz-result hidden">
       <p>Kết quả: <span id="quiz-result"></span></p>
       <div class="quiz-result-buttons">
-        <button onclick="startQuiz()">Chơi lại Quiz</button>
         <button onclick="switchMode('flashcard')">Quay lại Flashcard</button>
+        <button onclick="startQuiz()">Chơi lại Quiz</button>        
       </div>
     </div>
   </div>
