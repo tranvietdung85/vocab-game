@@ -247,6 +247,12 @@ body {
     padding: 8px;
   }
 
+  .quiz-option button {
+    width: auto;
+    min-width: 90% !important;
+    max-width: 95% !important;
+    margin: 4px; 
+  }
   button,
   select {
     width: auto;
@@ -255,13 +261,7 @@ body {
     font-size: 16px;
     padding: 10px;
   }
-
-  .quiz-option button {
-    width: auto;
-    min-width: 90% !important;
-    max-width: 95% !important;
-    margin: 4px; 
-}
+  
   .mode-buttons button,
   .quiz-actions button,
   .quiz-result-buttons button {
