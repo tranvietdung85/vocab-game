@@ -251,7 +251,7 @@ body {
 @media (max-width: 600px) {
   body {
     padding: 8px;
-    padding-bottom: 20vw;
+    padding-bottom: 40vw;
   }
   .container {
     max-width: 100vw;
