@@ -312,6 +312,7 @@ function checkQuizAnswer(selected, correct) {
     knownWords.add(q.English);
     saveProgress();
     updateProgress();
+    }
   } else {
     playEffect("wrong");
     showFeedback("❌ Sai rồi!", "red");
