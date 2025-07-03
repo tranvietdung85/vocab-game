@@ -255,7 +255,7 @@ body {
     padding: 10px;
   }
 
-  .quiz-option {
+  .quiz-option button {
   width: 90%;
   margin: 8px 0; 
 }
