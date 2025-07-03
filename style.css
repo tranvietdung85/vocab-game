@@ -90,6 +90,7 @@ body {
   width: 90%;
   margin: 8px 0;
   display: block;
+  box-sizing: border-box;
 }
 
 .quiz-option:hover {
