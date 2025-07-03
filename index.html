@@ -17,6 +17,10 @@
       <button id="btnFlashcard" class="active" onclick="switchMode('flashcard')">Flashcard</button>
       <button id="btnQuiz" onclick="switchMode('quiz')">Quiz</button>
     </div>
+    <div class="quiz-actions">
+      <button onclick="startWrongQuiz()">📚 Ôn lại từ sai</button>
+      <button onclick="clearWrongWords()">🗑 Xóa từ sai</button>
+    </div>    
     <div class="quiz-count-mute">
       <!-- Nút tắt tiếng -->
       <label class="mute-toggle">
@@ -28,10 +32,6 @@
         <option value="10">10 câu</option>
         <option value="20">20 câu</option>
       </select>
-    </div>
-    <div class="quiz-actions">
-      <button onclick="startWrongQuiz()">📚 Ôn lại từ sai</button>
-      <button onclick="clearWrongWords()">🗑 Xóa từ sai</button>
     </div>    
   </div>
 
