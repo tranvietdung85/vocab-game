@@ -4,7 +4,7 @@ body {
   font-family: Arial, sans-serif;
   background: #f4f4f4;
   text-align: center;
-  padding: 30px;
+  padding: 40px;
 }
 
 .language-switch,
@@ -350,8 +350,7 @@ body {
     aspect-ratio: 1 / 1;
   }
 
-  .left-banner, .right-banner {
-    height: 12vw;    
+  .left-banner, .right-banner { 
     all: unset;
   }
 }
