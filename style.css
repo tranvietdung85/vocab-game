@@ -272,12 +272,13 @@ body {
     height: auto;
     margin: 10px auto;
     padding: 0;
+    aspect-ratio: 3 / 2;
   }
 
   .card-face {
   padding: 12px;
   }
-  
+
   .card img {
     max-width: 80px;
   }
