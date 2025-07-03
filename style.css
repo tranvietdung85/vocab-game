@@ -265,8 +265,8 @@ body {
   }
 
   .quiz-button {
-  width: 90% !important;
-  max-width: 95% !important;
+    width: 90% !important;
+    max-width: 95% !important;
   }
 
   button,
@@ -274,7 +274,7 @@ body {
     width: auto;
     min-width: 10%;
     max-width: 30%;
-    font-size: 16px;
+    font-size: 24px;
     padding: 10px;
   }
   
