@@ -256,8 +256,10 @@ body {
   }
 
   .quiz-option button {
-  width: 90%;
-  margin: 8px 0; 
+    width: auto;
+    min-width: 90%;
+    max-width: 95%;
+    margin: 4px; 
 }
   .mode-buttons button,
   .quiz-actions button,
