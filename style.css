@@ -247,6 +247,30 @@ body {
   font-size: 16px;
 }
 
+.quiz-count-mute {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 8px auto;
+}
+
+.quiz-count-mute select {
+  padding: 6px 10px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1.5px solid #007bff;
+  color: #007bff;
+  background: #fff;
+  min-width: 100px;
+}
+
+.quiz-count-mute label {
+  font-size: 15px;
+}
+
+
 
 @media (max-width: 600px) {
   body {
@@ -287,6 +311,13 @@ body {
     max-width: 48%;
     margin: 4px;
   }
+
+  .quiz-count-mute {
+  flex-direction: row;
+  justify-content: center;
+  gap: 12px;
+  }
+
 
   .card-container button {
     width: auto;
