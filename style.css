@@ -248,6 +248,9 @@ body {
 
   button,
   select {
+    width: auto;
+    min-width: 10%;
+    max-width: 30%;
     font-size: 16px;
     padding: 10px;
   }
@@ -263,8 +266,8 @@ body {
 
   .card-container button {
     width: auto;
-    min-width: 44%;
-    max-width: 48%;
+    min-width: 10%;
+    max-width: 30%;
     margin: 4px;
   }
 
