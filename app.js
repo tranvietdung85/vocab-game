@@ -218,19 +218,48 @@ function switchMode(mode) {
   }
 }
 
+function getRandomFromList(arr, count) {
+  const copy = [...arr];
+  const result = [];
+  while (copy.length && result.length < count) {
+    const i = Math.floor(Math.random() * copy.length);
+    result.push(copy.splice(i, 1)[0]);
+  }
+  return result;
+}
+
 function startQuiz() {
-  const count = parseInt(document.getElementById("quizCount").value) || 5;
-  quizList = shuffle([...filteredList]).slice(0, count);
-  quizCurrent = 0;
+  quizMode = true;
   quizScore = 0;
+  quizCurrent = 0;
+  quizList = [];
 
-  const quizContainer = document.getElementById('quiz-container');
-  const quizResultBlock = document.getElementById('quiz-result-block');
+  const count = parseInt(document.getElementById("quizCount").value) || 5;
 
-  // Ẩn kết quả quiz nếu đang hiển thị
-  if (quizResultBlock) quizResultBlock.style.display = 'none';
-  if (quizContainer) quizContainer.style.display = 'block';
+  // Tách wordList thành từ đã biết và chưa biết
+  const known = [];
+  const unknown = [];
+  for (const w of wordList) {
+    if (knownWords.has(w.English)) {
+      known.push(w);
+    } else {
+      unknown.push(w);
+    }
+  }
 
+  // Chọn theo tỷ lệ: 80% chưa biết, 20% đã biết
+  const nUnknown = Math.floor(count * 0.8);
+  const nKnown = count - nUnknown;
+
+  const selected = [
+    ...getRandomFromList(unknown, nUnknown),
+    ...getRandomFromList(known, nKnown),
+  ];
+
+  quizList = shuffle(selected);
+
+  document.getElementById("quiz-container").style.display = "block";
+  document.getElementById("quiz-result").style.display = "none";
   renderQuiz();
 }
 
