@@ -9,7 +9,8 @@ body {
 
 .language-switch,
 .mode-switch {
-  margin-bottom: 16px;
+  max-height: 5%;
+  margin-bottom: 10px;
 }
 
 .language-switch button,
@@ -41,7 +42,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
-  max-width: 600px;
+  max-width: 450px;
   margin: 12px auto;
 }
 
@@ -137,7 +138,7 @@ body {
 
 .card {
   width: 100%;
-  max-width: 360px;
+  max-width: 550px;
   height: 240px;
   margin: 32px auto;
   perspective: 1000px;
