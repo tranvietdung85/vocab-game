@@ -344,7 +344,7 @@ function reviewImportantWords() {
   quizList = shuffle(selected);
 
   document.getElementById("quiz-container").style.display = "block";
-  document.getElementById("quiz-result").style.display = "none";
+  document.getElementById("quiz-result").textContent = "";
   renderQuiz();
 }
 
