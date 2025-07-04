@@ -292,6 +292,60 @@ function shuffle(array) {
   }
   return array;
 }
+/* BỔ SUNG CHẾ ĐỘ ÔN LẠI (TỪ ĐẾN HẠN) */
+function reviewDueWords() {
+  quizMode = true;
+  quizScore = 0;
+  quizCurrent = 0;
+  quizList = [];
+
+  const dueWords = wordList.filter(w => isDue(w.English));
+  const count = parseInt(document.getElementById("quizCount").value) || 5;
+
+  if (dueWords.length === 0) {
+    alert("Không có từ nào cần ôn lại hôm nay.");
+    return;
+  }
+
+  const selected = getRandomFromList(dueWords, Math.min(count, dueWords.length));
+  quizList = shuffle(selected);
+
+  document.getElementById("quiz-container").style.display = "block";
+  document.getElementById("quiz-result").style.display = "none";
+  renderQuiz();
+}
+
+/* Kết hợp danh sách từ cần ôn: sai + đến hạn */
+function reviewImportantWords() {
+  quizMode = true;
+  quizScore = 0;
+  quizCurrent = 0;
+  quizList = [];
+
+  const count = parseInt(document.getElementById("quizCount").value) || 5;
+  const wrongList = JSON.parse(localStorage.getItem("wrongWords") || "[]");
+
+  // Lấy từ sai
+  const wrongWords = wordList.filter(w => wrongList.includes(w.English));
+
+  // Lấy từ đến hạn ôn
+  const dueWords = wordList.filter(w => isDue(w.English));
+
+  // Hợp nhất & loại trùng
+  const merged = [...new Map([...wrongWords, ...dueWords].map(w => [w.English, w])).values()];
+
+  if (merged.length === 0) {
+    alert("Không có từ nào cần ôn lại.");
+    return;
+  }
+
+  const selected = getRandomFromList(merged, Math.min(count, merged.length));
+  quizList = shuffle(selected);
+
+  document.getElementById("quiz-container").style.display = "block";
+  document.getElementById("quiz-result").style.display = "none";
+  renderQuiz();
+}
 
 
 function getRandomWrongAnswers(correct, count) {
@@ -451,7 +505,7 @@ function switchLanguage(l) {
     if (lang === 'vi') {
       if (key === 'title') el.textContent = "Học Từ Vựng";
       if (key === 'next') el.textContent = "Từ tiếp theo";
-      if (key === 'known') el.textContent = "Đã biết";
+      if (key === 'known') el.textContent = "Từ đã biết";
       if (key === 'reset') el.textContent = "Học lại toàn bộ";
       if (key === 'random') el.textContent = "Hiển thị từ ngẫu nhiên";
     } else {
