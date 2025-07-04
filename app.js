@@ -258,6 +258,7 @@ function startQuiz() {
 
   quizList = shuffle(selected);
 
+  document.getElementById("quiz-result-block").style.display = "none";
   document.getElementById("quiz-container").style.display = "block";
   document.getElementById("quiz-result").style.display = "none";
   renderQuiz();
