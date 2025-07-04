@@ -263,6 +263,28 @@ function startQuiz() {
   renderQuiz();
 }
 
+// Cập nhật showNextWord để giảm tần suất từ đã biết
+function showNextWord() {
+  const known = [];
+  const unknown = [];
+
+  for (const w of wordList) {
+    if (knownWords.has(w.English)) {
+      known.push(w);
+    } else {
+      unknown.push(w);
+    }
+  }
+
+  // Ưu tiên chọn từ chưa biết: 70% cơ hội
+  let pickFrom = Math.random() < 0.7 ? unknown : known;
+  if (pickFrom.length === 0) pickFrom = wordList;
+
+  const index = Math.floor(Math.random() * pickFrom.length);
+  currentWord = pickFrom[index];
+  renderCard(currentWord);
+}
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
