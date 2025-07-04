@@ -229,6 +229,8 @@ function getRandomFromList(arr, count) {
 }
 
 function startQuiz() {
+  const resultBlock = document.getElementById("quiz-result-block");
+  if (resultBlock) resultBlock.style.display = "none";
   quizMode = true;
   quizScore = 0;
   quizCurrent = 0;
@@ -263,36 +265,161 @@ function startQuiz() {
   renderQuiz();
 }
 
-// Cập nhật showNextWord để giảm tần suất từ đã biết
-function showNextWord() {
-  const known = [];
-  const unknown = [];
+// ===========================
+// HỖ TRỢ SPACED REPETITION
+// ===========================
 
-  for (const w of wordList) {
-    if (knownWords.has(w.English)) {
-      known.push(w);
-    } else {
-      unknown.push(w);
-    }
+function getToday() {
+  const today = new Date();
+  return today.toISOString().slice(0, 10); // YYYY-MM-DD
+}
+
+function getNextReviewDate(level) {
+  const delays = [1, 3, 7, 15, 30]; // ngày
+  const today = new Date();
+  const days = delays[Math.min(level, delays.length - 1)];
+  today.setDate(today.getDate() + days);
+  return today.toISOString().slice(0, 10);
+}
+
+function updateReview(word, isCorrect) {
+  const reviewMap = JSON.parse(localStorage.getItem("reviewMap") || '{}');
+  const today = getToday();
+
+  let record = reviewMap[word] || { level: 0 };
+
+  if (isCorrect) {
+    record.level = (record.level || 0) + 1;
+    record.nextReview = getNextReviewDate(record.level);
+  } else {
+    record.level = 0;
+    record.nextReview = getNextReviewDate(0);
   }
 
-  // Ưu tiên chọn từ chưa biết: 70% cơ hội
-  let pickFrom = Math.random() < 0.7 ? unknown : known;
-  if (pickFrom.length === 0) pickFrom = wordList;
+  record.lastReviewed = today;
+  reviewMap[word] = record;
+  localStorage.setItem("reviewMap", JSON.stringify(reviewMap));
+}
 
+function isDue(word) {
+  const reviewMap = JSON.parse(localStorage.getItem("reviewMap") || '{}');
+  if (!reviewMap[word]) return true; // chưa học bao giờ → luôn hiển thị
+  const today = getToday();
+  return reviewMap[word].nextReview <= today;
+}
+
+// Cập nhật showNextWord để ưu tiên từ cần ôn lại
+function showNextWord() {
+  const candidates = wordList.filter(w => isDue(w.English));
+  const pickFrom = candidates.length ? candidates : wordList;
   const index = Math.floor(Math.random() * pickFrom.length);
   currentWord = pickFrom[index];
   renderCard(currentWord);
 }
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+// Cập nhật startQuiz để chỉ chọn từ đến hạn ôn
+function startQuiz() {
+  quizMode = true;
+  quizScore = 0;
+  quizCurrent = 0;
+  quizList = [];
+
+  const count = parseInt(document.getElementById("quizCount").value) || 5;
+
+  // Tách từ đến hạn (isDue) và còn lại
+  const due = wordList.filter(w => isDue(w.English));
+  const other = wordList.filter(w => !isDue(w.English));
+
+  const nDue = Math.min(Math.floor(count * 0.8), due.length);
+  const nOther = count - nDue;
+
+  const selected = [
+    ...getRandomFromList(due, nDue),
+    ...getRandomFromList(other, nOther),
+  ];
+
+  quizList = shuffle(selected);
+
+  document.getElementById("quiz-container").style.display = "block";
+  document.getElementById("quiz-result").style.display = "none";
+  renderQuiz();
 }
-/* BỔ SUNG CHẾ ĐỘ ÔN LẠI (TỪ ĐẾN HẠN) */
+
+// Khi người học chọn đúng/sai → cập nhật lịch học
+function checkQuizAnswer(selected, correct) {
+  const buttons = document.querySelectorAll('.quiz-option');
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correct) btn.classList.add("correct");
+    if (btn.textContent === selected && selected !== correct) {
+      btn.classList.add("wrong");
+      btn.style.color = "#fff";
+    }
+  });
+
+  const q = quizList[quizCurrent];
+
+  if (selected === correct) {
+    quizScore++;
+    playEffect("correct");
+    showFeedback("🎉 Chính xác!", "green");
+    updateReview(q.English, true);
+  } else {
+    playEffect("wrong");
+    showFeedback("❌ Sai rồi!", "red");
+    updateReview(q.English, false);
+  }
+
+  setTimeout(() => {
+    hideFeedback();
+    quizCurrent++;
+    renderQuiz();
+  }, 2500);
+}
+
+function renderQuiz() {
+  const quizContainer = document.getElementById("quiz-content");
+  const resultBlock = document.getElementById("quiz-result-block");
+  const resultText = document.getElementById("quiz-result");
+  const resultDetails = document.getElementById("quiz-result-details");
+
+  if (quizCurrent >= quizList.length) {
+    quizContainer.innerHTML = "";
+    const scoreText = `${quizScore} / ${quizList.length}`;
+    resultText.textContent = scoreText;
+
+    const percentage = Math.round((quizScore / quizList.length) * 100);
+    const feedback = percentage === 100
+      ? "🎉 Tuyệt vời! Bạn đã làm đúng hết!"
+      : percentage >= 70
+      ? "👍 Khá tốt! Cố gắng thêm chút nữa nhé."
+      : "🧐 Hãy ôn thêm những từ chưa chắc.";
+
+    resultDetails.innerHTML = `
+      <p>Kết quả chi tiết:</p>
+      <p>${feedback}</p>
+    `;
+
+    resultBlock.style.display = "block";
+    return;
+  }
+
+  const q = quizList[quizCurrent];
+  const options = shuffle([q.Vietnamese, ...getRandomWrongAnswers(q.Vietnamese, 3)]);
+  quizContainer.innerHTML = `
+    <div class="quiz-question">Tìm nghĩa của từ: <strong>${q.English}</strong> /${q.IPA || ""}/</div>
+    <div class="quiz-options">
+      ${options.map(opt => `<button class="quiz-option" onclick="checkQuizAnswer('${opt}', '${q.Vietnamese}')">${opt}</button>`).join("")}
+    </div>
+  `;
+}
+  }, 2500);
+}
+
+// ===========================
+// BỔ SUNG CHẾ ĐỘ ÔN LẠI (TỪ ĐẾN HẠN)
+// ===========================
+
 function reviewDueWords() {
   quizMode = true;
   quizScore = 0;
