@@ -276,7 +276,7 @@ function renderQuiz() {
 
   quizContainer.innerHTML = `
     <div class="quiz-question">
-      Từ: <strong>${q.English}</strong>
+      Tìm nghĩa của từ: <strong>${q.English}</strong>
       <span class="ipa">${q.IPA || ''}</span>
       <button onclick='speakFromObj(quizList[${quizCurrent}])'>🔊</button>
     </div>
