@@ -217,7 +217,7 @@ body {
   position: fixed;
   top: 50%;
   transform: translateY(-40%);
-  width: 32%;
+  width: 30%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
@@ -226,7 +226,7 @@ body {
 
 .side-banner img {
   width: 15%;
-  height: 15%px;
+  height: 15%;
   justify-self: center;
   align-self: center;
   object-fit: cover;
