@@ -296,28 +296,40 @@ function checkQuizAnswer(selected, correct) {
   buttons.forEach(btn => {
     btn.disabled = true;
     if (btn.textContent === correct) btn.classList.add("correct");
-    if (btn.textContent === selected && selected !== correct) btn.classList.add("wrong");
+    if (btn.textContent === selected && selected !== correct) {
+      btn.classList.add("wrong");
+      btn.style.color = "#fff";
+    }
   });
+
+  const q = quizList[quizCurrent];
+  const correctStreakMap = JSON.parse(localStorage.getItem("correctStreakMap") || '{}');
+  const wrongList = JSON.parse(localStorage.getItem("wrongWords") || "[]");
 
   if (selected === correct) {
     quizScore++;
     playEffect("correct");
     showFeedback("🎉 Chính xác!", "green");
-    const q = quizList[quizCurrent];
-    const correctMap = JSON.parse(localStorage.getItem("correctMap") || '{}');
-    correctMap[q.English] = (correctMap[q.English] || 0) + 1;
 
-    // ✅ Nếu trả lời đúng từ này >= 3 lần → đánh dấu là đã biết
-    if (correctMap[q.English] >= 3) {
-    knownWords.add(q.English);
-    saveProgress();
-    updateProgress();
+    // tăng chuỗi đúng liên tiếp
+    correctStreakMap[q.English] = (correctStreakMap[q.English] || 0) + 1;
+
+    // nếu đúng ≥ 3 lần liên tiếp => đánh dấu đã biết
+    if (correctStreakMap[q.English] >= 3) {
+      knownWords.add(q.English);
+      saveProgress();
+      updateProgress();
     }
+    localStorage.setItem("correctStreakMap", JSON.stringify(correctStreakMap));
+
   } else {
     playEffect("wrong");
     showFeedback("❌ Sai rồi!", "red");
-    const q = quizList[quizCurrent];
-    let wrongList = JSON.parse(localStorage.getItem("wrongWords") || "[]");
+
+    // reset chuỗi đúng liên tiếp
+    correctStreakMap[q.English] = 0;
+    localStorage.setItem("correctStreakMap", JSON.stringify(correctStreakMap));
+
     if (!wrongList.includes(q.English)) {
       wrongList.push(q.English);
       localStorage.setItem("wrongWords", JSON.stringify(wrongList));
