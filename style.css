@@ -220,8 +220,8 @@ body {
 }
 
 .side-banner img {
-  width: 240px;
-  height: 240px;
+  width: 180px;
+  height: 180px;
   justify-self: center;
   align-self: center;
   object-fit: cover;
