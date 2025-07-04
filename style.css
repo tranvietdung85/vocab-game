@@ -272,7 +272,7 @@ body {
 
 
 
-@media (max-width: 600px) {
+@media (max-width: 3840px) {
   body {
     padding: 8px;
     padding-bottom: 40px;
