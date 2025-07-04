@@ -124,9 +124,11 @@ body {
 
 .container {
   max-width: 600px;
+  max-height: 600px;
   margin: 0 auto;
   margin-left: 30%;
   margin-right: 30%;
+  align-items: center;
   background: #fff;
   padding: 24px;
   border-radius: 12px;
