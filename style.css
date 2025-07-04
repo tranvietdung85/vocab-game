@@ -225,8 +225,8 @@ body {
 }
 
 .side-banner img {
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   justify-self: center;
   align-self: center;
   object-fit: cover;
