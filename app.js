@@ -316,35 +316,43 @@ function reviewDueWords() {
   renderQuiz();
 }
 
-/* Kết hợp danh sách từ cần ôn: sai + đến hạn */
+// ===========================
+// HỢP NHẤT ÔN TẬP QUAN TRỌNG CÓ ƯU TIÊN
+// ===========================
 function reviewImportantWords() {
+  const resultBlock = document.getElementById("quiz-result-block");
+  if (resultBlock) resultBlock.style.display = "none";
+  const resultDetails = document.getElementById("quiz-result-details");
+  if (resultDetails) resultDetails.innerHTML = "";
+  const resultText = document.getElementById("quiz-result");
+  if (resultText) resultText.style.display = "none";
+
   quizMode = true;
   quizScore = 0;
   quizCurrent = 0;
   quizList = [];
 
-  // Ẩn kết quả trước
-  const resultBlock = document.getElementById("quiz-result-block");
-  if (resultBlock) resultBlock.style.display = "none";
-
-  const resultDetails = document.getElementById("quiz-result-details");
-  if (resultDetails) resultDetails.innerHTML = "";
-
-  const resultText = document.getElementById("quiz-result");
-  if (resultText) resultText.style.display = "none";
-
-
   const count = parseInt(document.getElementById("quizCount").value) || 5;
   const wrongList = JSON.parse(localStorage.getItem("wrongWords") || "[]");
 
-  // Lấy từ sai
+  // Từ sai
   const wrongWords = wordList.filter(w => wrongList.includes(w.English));
-
-  // Lấy từ đến hạn ôn
+  // Từ đến hạn
   const dueWords = wordList.filter(w => isDue(w.English));
 
-  // Hợp nhất & loại trùng
-  const merged = [...new Map([...wrongWords, ...dueWords].map(w => [w.English, w])).values()];
+  // Hợp nhất và loại trùng
+  const mergedMap = new Map();
+  [...wrongWords, ...dueWords].forEach(w => {
+    mergedMap.set(w.English, w);
+  });
+  const merged = Array.from(mergedMap.values());
+
+  // Ưu tiên: từ sai → đến hạn
+  merged.sort((a, b) => {
+    const isWrongA = wrongList.includes(a.English) ? 1 : 0;
+    const isWrongB = wrongList.includes(b.English) ? 1 : 0;
+    return isWrongB - isWrongA;
+  });
 
   if (merged.length === 0) {
     alert("Không có từ nào cần ôn lại.");
@@ -355,7 +363,6 @@ function reviewImportantWords() {
   quizList = shuffle(selected);
 
   document.getElementById("quiz-container").style.display = "block";
-  document.getElementById("quiz-result").textContent = "";
   renderQuiz();
 }
 
