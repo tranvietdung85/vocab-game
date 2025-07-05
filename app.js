@@ -228,7 +228,7 @@ function getRandomFromList(arr, count) {
   return result;
 }
 
-function startQuiz() {
+function startQuiz()  {
   quizMode = true;
   quizScore = 0;
   quizCurrent = 0;
@@ -357,17 +357,31 @@ function getRandomWrongAnswers(correct, count) {
 function renderQuiz() {
   const quizContainer = document.getElementById('quiz-container');
   const resultBlock = document.getElementById('quiz-result-block');
-
-  if (!quizList.length) {
-    quizContainer.innerHTML = '<h3>Không có từ nào để luyện Quiz!</h3>';
-    resultBlock.style.display = 'none';
-    return;
-  }
+  const resultText = document.getElementById('quiz-result');
+  const resultDetails = document.getElementById('quiz-result-details');
 
   if (quizCurrent >= quizList.length) {
     quizContainer.innerHTML = '';
-    document.getElementById('quiz-result').textContent = `${quizScore} / ${quizList.length}`;
-    resultBlock.style.display = 'block';
+    const scoreText = `${quizScore} / ${quizList.length}`;
+
+    if (resultText) {
+      resultText.textContent = scoreText;
+      resultText.style.display = "block"; 
+    }
+    const percentage = Math.round((quizScore / quizList.length) * 100);
+    const feedback = percentage === 100
+      ? "🎉 Tuyệt vời! Bạn đã làm đúng hết!"
+      : percentage >= 70
+      ? "👍 Khá tốt! Cố gắng thêm chút nữa nhé."
+      : "🧐 Hãy ôn thêm những từ chưa chắc.";
+
+    if (resultDetails) {
+      resultDetails.innerHTML = `
+        <p>${feedback}</p>
+      `;
+    }
+
+    if (resultBlock) resultBlock.style.display = "block";
     return;
   }
 
@@ -377,8 +391,8 @@ function renderQuiz() {
 
   let optionsHTML = "";
   answers.forEach(ans => {
-  optionsHTML += `<button class="quiz-option quiz-button" onclick="checkQuizAnswer('${ans.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">${ans}</button>`;
-});
+    optionsHTML += `<button class="quiz-option quiz-button" onclick="checkQuizAnswer('${ans.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">${ans}</button>`;
+  });
 
   quizContainer.innerHTML = `
     <div class="quiz-question">
@@ -394,6 +408,7 @@ function renderQuiz() {
 }
 
 
+
 function applyPastelToOptions() {
   const options = document.querySelectorAll(".quiz-option");
   options.forEach(el => {
@@ -402,7 +417,7 @@ function applyPastelToOptions() {
   });
 }
 
-function checkQuizAnswer(selected, correct) {
+function checkQuizAnswer(selected, correct)  {
   const buttons = document.querySelectorAll('.quiz-option');
   buttons.forEach(btn => {
     btn.disabled = true;
@@ -535,3 +550,60 @@ window.onload = () => {
   switchLanguage('vi');
   renderLevelOptions();
 };
+
+// ===========================
+// 🔁 SPACED REPETITION ENGINE
+// ===========================
+
+function getToday() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getNextReviewDate(level) {
+  const delays = [1, 3, 7, 15, 30];
+  const today = new Date();
+  today.setDate(today.getDate() + delays[Math.min(level, delays.length - 1)]);
+  return today.toISOString().slice(0, 10);
+}
+
+function updateReview(word, isCorrect) {
+  const map = JSON.parse(localStorage.getItem("reviewMap") || '{}');
+  const today = getToday();
+  let record = map[word] || { level: 0 };
+  record.level = isCorrect ? record.level + 1 : 0;
+  record.nextReview = getNextReviewDate(record.level);
+  record.lastReviewed = today;
+  map[word] = record;
+  localStorage.setItem("reviewMap", JSON.stringify(map));
+}
+
+function isDue(word) {
+  const map = JSON.parse(localStorage.getItem("reviewMap") || '{}');
+  if (!map[word]) return true;
+  return map[word].nextReview <= getToday();
+}
+
+// ===========================
+// 📚 CHẾ ĐỘ QUIZ ĐẾN HẠN
+// ===========================
+function reviewDueWords() {
+  quizMode = true;
+  quizScore = 0;
+  quizCurrent = 0;
+  quizList = [];
+
+  const dueWords = wordList.filter(w => isDue(w.English));
+  const count = parseInt(document.getElementById("quizCount").value) || 5;
+
+  if (dueWords.length === 0) {
+    alert("Không có từ nào cần ôn lại hôm nay.");
+    return;
+  }
+
+  const selected = getRandomFromList(dueWords, Math.min(count, dueWords.length));
+  quizList = shuffle(selected);
+
+  document.getElementById("quiz-container").style.display = "block";
+  document.getElementById("quiz-result").style.display = "none";
+  renderQuiz();
+}
