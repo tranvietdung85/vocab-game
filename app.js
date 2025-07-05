@@ -323,6 +323,17 @@ function reviewImportantWords() {
   quizCurrent = 0;
   quizList = [];
 
+  // Ẩn kết quả trước
+  const resultBlock = document.getElementById("quiz-result-block");
+  if (resultBlock) resultBlock.style.display = "none";
+
+  const resultDetails = document.getElementById("quiz-result-details");
+  if (resultDetails) resultDetails.innerHTML = "";
+
+  const resultText = document.getElementById("quiz-result");
+  if (resultText) resultText.style.display = "none";
+
+
   const count = parseInt(document.getElementById("quizCount").value) || 5;
   const wrongList = JSON.parse(localStorage.getItem("wrongWords") || "[]");
 
@@ -434,7 +445,7 @@ function checkQuizAnswer(selected, correct)  {
 
   if (selected === correct) {
     quizScore++;
-    playEffect("correct");
+    if (!isMuted) { playEffect("correct"); }
     showFeedback("🎉 Chính xác!", "green");
 
     // tăng chuỗi đúng liên tiếp
@@ -449,7 +460,7 @@ function checkQuizAnswer(selected, correct)  {
     localStorage.setItem("correctStreakMap", JSON.stringify(correctStreakMap));
 
   } else {
-    playEffect("wrong");
+    if (!isMuted) { playEffect("wrong");}
     showFeedback("❌ Sai rồi!", "red");
 
     // reset chuỗi đúng liên tiếp
